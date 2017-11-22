@@ -31,6 +31,7 @@ class AddInventoryViewController: UIViewController {
         inv.name = name
         inv.quantity = quantity
         inv.date = formattedDate
+        inv.favorite = false
         
         coreDataStack.saveTo(context: coreDataStack.privateContext)
         

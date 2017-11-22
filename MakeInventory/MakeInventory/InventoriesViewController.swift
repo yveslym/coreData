@@ -68,8 +68,11 @@ extension InventoriesViewController: UITableViewDelegate {
         cell.nameLabel.text = item.name
         cell.quantityLabel.text = "x\(item.quantity)"
         cell.dateLabel.text = item.date
-        
-        
+        cell.inventory = item
+        cell.indexPath = indexPath
+        cell.delegate = self
+        cell.favoriteButton.isSelected = item.favorite
+
         return cell
     }
     
@@ -88,6 +91,23 @@ extension InventoriesViewController: UITableViewDelegate {
             self.tableView.reloadData()
         }
     }
+}
+
+
+extension InventoriesViewController: stackDelegate {
+    func updateFavorite(_ inventory: Inventory, _ indexPath: IndexPath) {
+        if inventory.favorite == true{
+            inventory.favorite = false
+        } else {
+            inventory.favorite = true
+        }
+        
+        stack.saveTo(context: stack.viewContext)
+        tableView.reloadRows(at: [indexPath], with: .fade)
+        self.fetchFromCoredata()
+    }
+    
+    
 }
 
 
